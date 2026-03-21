@@ -65,7 +65,7 @@ export default function About() {
                     </h2>
                     <div className="space-y-6 text-muted text-lg leading-relaxed">
                         <p>
-                            At APEX FITNESS, we believe in pushing boundaries. Our facility is
+                            At YOGI FITNESS STUDIO, we believe in pushing boundaries. Our facility is
                             designed for those who demand the best from themselves and their
                             environment.
                         </p>
@@ -100,11 +100,11 @@ export default function About() {
 
                 <div ref={imageRef} className="relative group">
                     <div className="absolute -inset-4 border border-primary/20 rounded-2xl -z-10 translate-x-4 translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500" />
-                    <div className="aspect-[4/5] bg-[#111] rounded-2xl overflow-hidden shadow-2xl relative">
+                    <div className="bg-[#111] rounded-2xl overflow-hidden shadow-2xl relative">
                         <img
-                            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80"
-                            alt="Apex Facility"
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            src="/gallery/about_equipment.jpg"
+                            alt="Yogi Facility Equipment"
+                            className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-700"
                         />
                     </div>
                     <div className="absolute bottom-6 left-6 p-4 glass rounded-xl">

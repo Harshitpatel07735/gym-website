@@ -14,18 +14,11 @@ const programs = [
         color: "#ff2d2d",
     },
     {
-        name: "HIIT",
+        name: "hit",
         suffix: "Intensity",
         desc: "Burn fat and boost metabolism with high-intensity intervals.",
         icon: Zap,
         color: "#ff6b2b",
-    },
-    {
-        name: "Boxing",
-        suffix: "Elite",
-        desc: "Master technique and speed with our professional ring training.",
-        icon: Target,
-        color: "#ff2d2d",
     },
     {
         name: "Yoga",
@@ -126,7 +119,7 @@ function Card({
             }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={cn(
-                "relative shrink-0 w-[340px] md:w-[450px] h-[580px] glass rounded-[3rem] p-12 cursor-pointer overflow-hidden border-white/5 snap-center transition-shadow duration-500",
+                "relative shrink-0 w-[300px] md:w-[400px] h-[520px] glass rounded-[3rem] p-8 cursor-pointer overflow-hidden border-white/5 snap-center transition-shadow duration-500",
                 isHovered ? "z-50 border-primary/50 shadow-[0_40px_100px_rgba(255,45,45,0.25)]" : "z-10"
             )}
         >
@@ -211,7 +204,7 @@ export default function Programs() {
     const scroll = (direction: "left" | "right") => {
         if (scrollContainerRef.current) {
             const { scrollLeft } = scrollContainerRef.current;
-            const scrollTo = direction === "left" ? scrollLeft - 450 : scrollLeft + 450;
+            const scrollTo = direction === "left" ? scrollLeft - 400 : scrollLeft + 400;
             scrollContainerRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
         }
     };
@@ -246,7 +239,7 @@ export default function Programs() {
                         <div className="flex items-center gap-4 mb-8">
                             <span className="w-12 h-[1px] bg-primary" />
                             <span className="text-xs uppercase tracking-[0.5em] font-black text-primary/80">
-                                The Forge Spaces
+                                The Yogi Spaces
                             </span>
                         </div>
                         <h2 className="text-7xl md:text-[9vw] font-black uppercase tracking-tighter leading-[0.8]">
@@ -318,7 +311,7 @@ export default function Programs() {
                 <div className="mt-4 flex justify-between text-[10px] uppercase tracking-[0.4em] font-black text-white/20 italic">
                     <span>Navigation Start</span>
                     <span>Scroll to explore</span>
-                    <span>Forge End</span>
+                    <span>Yogi End</span>
                 </div>
             </div>
 

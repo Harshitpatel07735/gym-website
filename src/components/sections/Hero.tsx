@@ -58,11 +58,11 @@ export default function Hero() {
                     </div>
 
                     <h1 className="text-6xl md:text-[clamp(48px,8vw,120px)] font-black uppercase leading-[0.9] tracking-tighter mb-6 overflow-hidden">
-                        <span ref={title1Ref} className="block">
-                            Break Your{" "}
+                        <span ref={title1Ref} className="block text-gradient">
+                            Yogi Fitness{" "}
                         </span>
-                        <span ref={title2Ref} className="block text-gradient">
-                            Limits
+                        <span ref={title2Ref} className="block ">
+                            Studio
                         </span>
                     </h1>
 
@@ -76,13 +76,6 @@ export default function Hero() {
                     </p>
 
                     <div ref={ctaRef} className="flex flex-col sm:flex-row gap-6">
-                        <button
-                            onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="btn-primary group relative overflow-hidden"
-                        >
-                            <span className="relative z-10">Start Your Journey</span>
-                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                        </button>
                         <button
                             onClick={() => setShowVideo(true)}
                             className="btn-outline flex items-center gap-2 group"

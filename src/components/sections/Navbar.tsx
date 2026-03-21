@@ -19,14 +19,31 @@ const navLinks = [
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdminPage, setIsAdminPage] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
         };
         window.addEventListener("scroll", handleScroll);
+        
+        // Check login state
+        const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+        setIsLoggedIn(loggedIn);
+        
+        // Check if on admin page
+        setIsAdminPage(window.location.pathname.startsWith("/admin"));
+
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userEmail");
+        setIsLoggedIn(false);
+        window.location.href = "/";
+    };
 
     return (
         <nav
@@ -38,7 +55,7 @@ export default function Navbar() {
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="text-2xl font-black tracking-tighter text-white">
-                    FORGE<span className="text-primary">.</span>
+                    YOGI<span className="text-primary">.</span>
                 </Link>
 
                 {/* Desktop Nav */}
@@ -53,7 +70,28 @@ export default function Navbar() {
                             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full" />
                         </Link>
                     ))}
-                    <button className="btn-primary py-2 px-6 text-xs">Join Now</button>
+                    
+                    {isLoggedIn ? (
+                        <div className="flex items-center gap-4">
+                            {!isAdminPage && (
+                                <Link href="/admin" className="text-xs uppercase tracking-[0.2em] font-black text-primary hover:text-white transition-colors">
+                                    Admin Dashboard
+                                </Link>
+                            )}
+                            <button onClick={handleLogout} className="btn-outline py-2 px-6 text-xs border-white/20 hover:border-red-500 hover:text-red-500 uppercase tracking-widest font-bold">
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-6">
+                            <Link href="/login" className="text-xs uppercase tracking-[0.2em] font-black text-white hover:text-primary transition-colors">
+                                Login
+                            </Link>
+                            <Link href="/login" className="text-xs uppercase tracking-[0.2em] font-black text-primary hover:text-white transition-colors">
+                                Admin
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
                 {/* Mobile Toggle */}
@@ -90,14 +128,41 @@ export default function Navbar() {
                                 </Link>
                             </motion.div>
                         ))}
-                        <motion.button
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: navLinks.length * 0.1 }}
-                            className="btn-primary mt-4"
-                        >
-                            Join Now
-                        </motion.button>
+                        
+                        {isLoggedIn ? (
+                            <>
+                                <Link
+                                    href="/admin"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-2xl font-black uppercase tracking-tighter text-primary"
+                                >
+                                    Admin Dashboard
+                                </Link>
+                                <button
+                                    onClick={handleLogout}
+                                    className="btn-outline mt-4"
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <div className="flex flex-col items-center gap-6 mt-4">
+                                <Link
+                                    href="/login"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-4xl font-black uppercase tracking-tighter hover:text-primary transition-colors text-white"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    href="/login"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="text-2xl font-black uppercase tracking-tighter text-primary hover:text-white transition-colors"
+                                >
+                                    Admin
+                                </Link>
+                            </div>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>

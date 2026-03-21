@@ -2,7 +2,6 @@ import Hero from "@/components/sections/Hero";
 import Marquee from "@/components/sections/Marquee";
 import About from "@/components/sections/About";
 import Programs from "@/components/sections/Programs";
-import Activities from "@/components/sections/Activities";
 import FeaturedVideo from "@/components/sections/FeaturedVideo";
 import Trainers from "@/components/sections/Trainers";
 import Stats from "@/components/sections/Stats";
@@ -22,7 +21,6 @@ export default function Home() {
             <Marquee />
             <About />
             <Programs />
-            <Activities />
             <FeaturedVideo />
             <Trainers />
             <Stats />
