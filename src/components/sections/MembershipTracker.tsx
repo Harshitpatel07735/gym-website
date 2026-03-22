@@ -152,16 +152,23 @@ export default function MembershipTracker() {
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (event, session) => {
-                if (event === 'SIGNED_IN' && session?.user) {
-                    setIsLoggedIn(true)
-                    await loadData(session.user.id)
-                }
-                if (event === 'SIGNED_OUT') {
+                // Clear everything immediately on sign out
+                if (event === 'SIGNED_OUT' || !session?.user) {
                     setIsLoggedIn(false)
                     setProfile(null)
                     setMembership(null)
                     setCheckins([])
                     setStreak(0)
+                    setDaysLeft(0)
+                    setProgress(0)
+                    setWhatsapp('')
+                    return
+                }
+
+                // Load data for signed in user
+                if (event === 'SIGNED_IN' && session?.user) {
+                    setIsLoggedIn(true)
+                    await loadData(session.user.id)
                 }
             }
         )
@@ -224,9 +231,11 @@ export default function MembershipTracker() {
 
     // Handle sign out
     const handleSignOut = async () => {
-        await signOut()
-        setIsLoggedIn(false)
-        setProfile(null)
+        const supabase = createClient()
+        await supabase.auth.signOut()
+        // onAuthStateChange will fire SIGNED_OUT in BOTH
+        // Navbar and MembershipTracker automatically
+        // No need to manually set state here
     }
 
     const planLabel = membership

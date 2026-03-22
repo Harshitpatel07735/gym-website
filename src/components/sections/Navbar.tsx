@@ -66,19 +66,29 @@ export default function Navbar() {
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (event, session) => {
-                if (session?.user) {
-                    const { data: profile } = await supabase
-                        .from('profiles')
-                        .select('role, full_name')
-                        .eq('id', session.user.id)
-                        .single()
-                    setCurrentUser({
-                        email: session.user.email ?? '',
-                        role: profile?.role ?? 'member',
-                        full_name: profile?.full_name ?? null,
-                    })
-                } else {
+                // Clear user immediately on sign out
+                if (event === 'SIGNED_OUT' || !session?.user) {
                     setCurrentUser(null)
+                    setShowUserMenu(false)
+                    return
+                }
+
+                // Load profile for signed in user
+                if (session?.user) {
+                    try {
+                        const { data: profile } = await supabase
+                            .from('profiles')
+                            .select('role, full_name')
+                            .eq('id', session.user.id)
+                            .single()
+                        setCurrentUser({
+                            email: session.user.email ?? '',
+                            role: profile?.role ?? 'member',
+                            full_name: profile?.full_name ?? null,
+                        })
+                    } catch {
+                        setCurrentUser(null)
+                    }
                 }
             }
         )
@@ -89,8 +99,11 @@ export default function Navbar() {
     const handleSignOut = async () => {
         setShowUserMenu(false)
         setIsMobileMenuOpen(false)
-        await signOut()
-        setCurrentUser(null)
+        const supabase = createClient()
+        await supabase.auth.signOut()
+        // onAuthStateChange fires SIGNED_OUT in all components
+        // Navbar clears via the listener automatically
+        // MembershipTracker clears via its listener automatically
     }
 
     const displayName = currentUser?.full_name || currentUser?.email || ''
