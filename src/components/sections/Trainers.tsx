@@ -8,22 +8,22 @@ const trainers = [
     {
         name: "Alex 'Iron' Woods",
         role: "Strength & Conditioning",
-        img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80",
+        img: "/gallery/gym_view_1.jpg",
     },
     {
         name: "Sarah Jenkins",
         role: "HIIT Specialist",
-        img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80",
+        img: "/gallery/gym_view_9.jpg",
     },
     {
         name: "Marcus Thorne",
         role: "Professional Boxer",
-        img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80",
+        img: "/gallery/gym_view_10.jpg",
     },
     {
         name: "Elena Rodriguez",
         role: "Yoga Practitioner",
-        img: "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&q=80",
+        img: "/gallery/gym_view_11.jpg",
     },
 ];
 
