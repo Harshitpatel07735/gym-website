@@ -1,41 +1,69 @@
-"use client";
+'use client'
 
-import { Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Check } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { createClient } from '@/lib/supabase/client'
+import { useEffect, useState } from 'react'
 
 const plans = [
     {
-        name: "Basic",
-        price: "1,999",
-        features: ["Access to gym floor", "Standard equipment", "Locker access"],
+        name: 'Basic',
+        price: '1,999',
+        plan: 'basic',
+        features: ['Access to gym floor', 'Standard equipment', 'Locker access'],
         active: false,
     },
     {
-        name: "Pro",
-        price: "3,999",
+        name: 'Pro',
+        price: '3,999',
+        plan: 'pro',
         features: [
-            "Everything in Basic",
-            "Group classes",
-            "1 Personal training/mo",
-            "Nutrition guidance",
+            'Everything in Basic',
+            'Group classes',
+            '1 Personal training/mo',
+            'Nutrition guidance',
         ],
         active: true,
         popular: true,
     },
     {
-        name: "Elite",
-        price: "6,999",
+        name: 'Elite',
+        price: '6,999',
+        plan: 'elite',
         features: [
-            "Everything in Pro",
-            "Unlimited personal training",
-            "Recovery suite access",
-            "Priority booking",
+            'Everything in Pro',
+            'Unlimited personal training',
+            'Recovery suite access',
+            'Priority booking',
         ],
         active: false,
     },
-];
+]
 
 export default function Pricing() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        const supabase = createClient()
+        supabase.auth.getUser().then(({ data: { user } }) => {
+            setIsLoggedIn(!!user)
+        })
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+            setIsLoggedIn(!!session?.user)
+        })
+        return () => subscription.unsubscribe()
+    }, [])
+
+    const handleGetStarted = (planName: string) => {
+        if (!isLoggedIn) {
+            // Not logged in → go to login page
+            window.location.href = '/login'
+            return
+        }
+        // Logged in but no Razorpay yet → scroll to member dashboard
+        document.getElementById('member-login')?.scrollIntoView({ behavior: 'smooth' })
+    }
+
     return (
         <section id="pricing" className="py-24 md:py-40 px-6 md:px-12 bg-background">
             <div className="max-w-7xl mx-auto">
@@ -53,8 +81,8 @@ export default function Pricing() {
                         <div
                             key={plan.name}
                             className={cn(
-                                "relative p-8 rounded-2xl glass transition-all duration-500 hover:scale-105",
-                                plan.active ? "border-primary/50 py-12 bg-primary/5" : "hover:border-white/20"
+                                'relative p-8 rounded-2xl glass transition-all duration-500 hover:scale-105',
+                                plan.active ? 'border-primary/50 py-12 bg-primary/5' : 'hover:border-white/20'
                             )}
                         >
                             {plan.popular && (
@@ -85,19 +113,33 @@ export default function Pricing() {
                             </ul>
 
                             <button
+                                onClick={() => handleGetStarted(plan.plan)}
                                 className={cn(
-                                    "w-full py-4 rounded-xl font-black uppercase tracking-widest text-xs transition-all",
+                                    'w-full py-4 rounded-xl font-black uppercase tracking-widest text-xs transition-all',
                                     plan.active
-                                        ? "bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/20"
-                                        : "border border-white/10 hover:bg-white/5"
+                                        ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/20 hover:shadow-primary/40'
+                                        : 'border border-white/10 hover:bg-white/5 text-white'
                                 )}
                             >
-                                Get Started
+                                {isLoggedIn ? 'Get Started' : 'Login to Get Started'}
                             </button>
                         </div>
                     ))}
                 </div>
+
+                {!isLoggedIn && (
+                    <p className="text-center text-muted text-xs mt-8 uppercase tracking-widest">
+                        <a href="/login" className="text-primary hover:underline font-bold">
+                            Login
+                        </a>
+                        {' '}or{' '}
+                        <a href="/login" className="text-primary hover:underline font-bold">
+                            Create account
+                        </a>
+                        {' '}to purchase a membership
+                    </p>
+                )}
             </div>
         </section>
-    );
+    )
 }
