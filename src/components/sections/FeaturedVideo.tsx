@@ -27,7 +27,7 @@ export default function FeaturedVideo() {
         <section ref={sectionRef} id="featured-video" className="relative h-[60vh] md:h-screen w-full overflow-hidden">
             {/* Background with themed runner */}
             <div className="absolute inset-0 bg-black flex items-center justify-center">
-                <div className="w-full h-full animate-ken-burns bg-[url('/runner-theme.png')] bg-contain bg-center bg-no-repeat" />
+                <div className="w-full h-full animate-ken-burns bg-[url('/gallery/about_quote.jpg')] bg-cover bg-center bg-no-repeat opacity-60" />
             </div>
 
             <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-6">

@@ -65,8 +65,18 @@ export default function Pricing() {
     }
 
     return (
-        <section id="pricing" className="py-24 md:py-40 px-6 md:px-12 bg-background">
-            <div className="max-w-7xl mx-auto">
+        <section id="pricing" className="py-24 md:py-40 px-6 md:px-12 bg-background relative overflow-hidden">
+            {/* Dynamic Background */}
+            <div className="absolute inset-0 z-0">
+                <img 
+                    src="/gallery/gym_view_5.jpg" 
+                    alt="Gym Background" 
+                    className="w-full h-full object-cover opacity-20 transition-transform duration-1000"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+            </div>
+
+            <div className="max-w-7xl mx-auto relative z-10">
                 <div className="text-center mb-16 md:mb-24">
                     <span className="text-xs uppercase tracking-[0.3em] font-bold text-primary mb-4 block">
                         Membership
